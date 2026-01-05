@@ -101,6 +101,10 @@
                     <strong>Localidade:</strong> {{ $projeto->localidade }}
                 </p>
 
+                <p class="mb-1">
+                    <strong>Organizador:</strong> {{ $projeto->coordenador }}
+                </p>
+
                 <p class="mb-0">
                     <strong>Período:</strong>
                     {{ \Carbon\Carbon::parse($projeto->data_inicio)->format('d/m/Y') }}
