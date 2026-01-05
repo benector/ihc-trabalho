@@ -59,7 +59,7 @@ php artisan migrate
 ### 6️⃣ Criar usuário e instâncias no banco
 
 ```
-php artisan db:seed --class=UserSeeder
+php artisan db:seed 
 ```
 
 **Credenciais padrão:**
