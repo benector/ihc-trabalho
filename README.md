@@ -17,7 +17,7 @@ Sistema administrativo desenvolvido em **Laravel 11** com template **AdminLTE 3*
 ### 1️⃣ Clonar o repositório
 
 ```
-git clone https://github.com/seu-usuario/extensao-ufjf.git
+git clone https://github.com/benector/ihc-trabalho.git
 cd extensao-ufjf
 ```
 
