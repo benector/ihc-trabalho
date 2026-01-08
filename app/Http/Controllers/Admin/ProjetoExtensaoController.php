@@ -25,7 +25,7 @@ class ProjetoExtensaoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'titulo' => 'required',
+            'titulo' => 'required|unique:projetos_extensao,titulo',
             'descricao' => 'required',
             'localidade' => 'required',
             'area_id' => 'required|exists:areas,id',
@@ -48,7 +48,7 @@ class ProjetoExtensaoController extends Controller
     public function update(Request $request, ProjetoExtensao $projeto)
     {
         $request->validate([
-            'titulo' => 'required',
+            'titulo' => 'required|unique:projetos_extensao,titulo',
             'descricao' => 'required',
             'localidade' => 'required',
             'area_id' => 'required',

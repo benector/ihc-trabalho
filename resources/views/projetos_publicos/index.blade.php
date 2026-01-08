@@ -3,9 +3,11 @@
 @section('content')
 <div class="container">
 
-    <h2 class="mb-4">Projetos de Extensão</h2>
+    <h2 class="mb-3">Projetos de Extensão</h2>
 
+    {{-- ===================== --}}
     {{-- FORMULÁRIO DE FILTROS --}}
+    {{-- ===================== --}}
     <form method="GET" class="mb-4">
 
         <div class="row">
@@ -43,15 +45,15 @@
 
         </div>
 
+        {{-- ================= --}}
         {{-- Áreas (recolhível) --}}
+        {{-- ================= --}}
         <div class="mt-3">
 
             <button class="btn btn-outline-primary btn-sm"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#filtroAreas"
-                    aria-expanded="false"
-                    aria-controls="filtroAreas">
+                    data-bs-target="#filtroAreas">
                 Filtrar por área de conhecimento
             </button>
 
@@ -80,7 +82,51 @@
 
     </form>
 
+{{-- ========================= --}}
+{{-- RESUMO + FILTROS APLICADOS --}}
+{{-- ========================= --}}
+<div class="mb-3">
+
+    {{-- Quantidade --}}
+    <strong>
+        {{ $projetos->total() }}
+        {{ $projetos->total() === 1 ? 'resultado encontrado' : 'resultados encontrados' }}
+    </strong>
+
+    {{-- Texto explicativo dos filtros --}}
+    @php
+        $filtros = [];
+
+        if(request('q')) {
+            $filtros[] = 'palavra-chave "' . request('q') . '"';
+        }
+
+        if(request('localidade')) {
+            $filtros[] = 'localidade "' . request('localidade') . '"';
+        }
+
+        if(request('area_id')) {
+            $nomesAreas = $areas
+                ->whereIn('id', request('area_id'))
+                ->pluck('nome')
+                ->implode(', ');
+
+            $filtros[] = 'área(s) ' . $nomesAreas;
+        }
+    @endphp
+
+    @if(count($filtros))
+        <div class="text-muted mt-1">
+            Exibindo resultados para {{ implode(', ', $filtros) }}.
+        </div>
+    @endif
+
+</div>
+
+
+    {{-- ================= --}}
     {{-- LISTAGEM --}}
+    {{-- ================= --}}
     @php use Illuminate\Support\Str; @endphp
 
     @forelse($projetos as $projeto)
@@ -93,8 +139,11 @@
                     {{ Str::limit($projeto->descricao, 250) }}
                 </p>
 
+                {{-- Área como label --}}
                 <p class="mb-1">
-                    <strong>Área:</strong> {{ $projeto->area->nome ?? 'Não informada' }}
+                    <span class="badge bg-primary">
+                        {{ $projeto->area->nome ?? 'Área não informada' }}
+                    </span>
                 </p>
 
                 <p class="mb-1">
@@ -105,24 +154,33 @@
                     <strong>Organizador:</strong> {{ $projeto->coordenador }}
                 </p>
 
-                <p class="mb-0">
+                <p class="mb-2">
                     <strong>Período:</strong>
                     {{ \Carbon\Carbon::parse($projeto->data_inicio)->format('d/m/Y') }}
                     –
                     {{ \Carbon\Carbon::parse($projeto->data_fim)->format('d/m/Y') }}
                 </p>
 
+                <a href="https://www2.ufjf.br/proex/extensao-universitaria/editais/"
+                   target="_blank"
+                   class="btn btn-primary btn-sm">
+                    Quero me inscrever
+                </a>
+
             </div>
         </div>
     @empty
+        {{-- Mensagem de nenhum resultado --}}
         <div class="alert alert-warning">
-            Nenhum projeto encontrado com os filtros informados.
+            Nenhum projeto foi encontrado com os filtros selecionados.
         </div>
     @endforelse
 
+    {{-- ================= --}}
     {{-- PAGINAÇÃO --}}
+    {{-- ================= --}}
     <div class="mt-4">
-        {{ $projetos->links() }}
+        {{ $projetos->withQueryString()->links() }}
     </div>
 
 </div>

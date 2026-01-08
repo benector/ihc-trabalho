@@ -5,13 +5,14 @@ use App\Http\Controllers\Admin\AcaoController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\ProjetoExtensaoController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', [ProjetoExtensaoController::class, 'index'])
-    ->middleware('auth');
+Route::get('/', function () {
+     return view('welcome');
+});
+Route::get('/', [RegisteredUserController::class, 'create'])
+    ->middleware('guest');
 
 
 
