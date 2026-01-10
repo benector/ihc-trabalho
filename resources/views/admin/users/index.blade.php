@@ -29,21 +29,39 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->is_admin ? 'Sim' : 'Não' }}</td>
-                        <td>
-                            <a href="{{ route('admin.users.edit', $user) }}"
-                            class="btn btn-sm btn-warning">Editar</a>
+                        <td class="text-nowrap">
 
+                            {{-- Editar --}}
+                            <a href="{{ route('admin.users.edit', $user) }}"
+                            class="btn btn-sm btn-warning"
+                            title="Editar">
+
+                                <span class="d-none d-md-inline">Editar</span>
+                                <span class="d-inline d-md-none">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                            </a>
+
+                            {{-- Excluir --}}
                             <form method="POST"
                                 action="{{ route('admin.users.destroy', $user) }}"
-                                style="display:inline;">
+                                class="d-inline">
                                 @csrf
                                 @method('DELETE')
+
                                 <button class="btn btn-sm btn-danger"
+                                        title="Excluir"
                                         onclick="return confirm('Tem certeza?')">
-                                    Excluir
+
+                                    <span class="d-none d-md-inline">Excluir</span>
+                                    <span class="d-inline d-md-none">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
                                 </button>
                             </form>
+
                         </td>
+
                     </tr>
                     @endforeach
                 </tbody>

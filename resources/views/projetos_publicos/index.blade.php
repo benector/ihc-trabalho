@@ -139,11 +139,17 @@
                     {{ Str::limit($projeto->descricao, 250) }}
                 </p>
 
-                {{-- Área como label --}}
+             {{-- Áreas como labels --}}
                 <p class="mb-1">
-                    <span class="badge bg-primary">
-                        {{ $projeto->area->nome ?? 'Área não informada' }}
-                    </span>
+                    @forelse($projeto->areas as $area)
+                        <span class="badge bg-primary me-1">
+                            {{ $area->nome }}
+                        </span>
+                    @empty
+                        <span class="badge bg-secondary">
+                            Área não informada
+                        </span>
+                    @endforelse
                 </p>
 
                 <p class="mb-1">

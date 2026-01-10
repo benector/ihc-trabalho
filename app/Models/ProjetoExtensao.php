@@ -25,9 +25,14 @@ class ProjetoExtensao extends Model
         'data_fim' => 'date',
     ];
 
-    public function area()
+    public function areas()
     {
-        return $this->belongsTo(Area::class);
+        return $this->belongsToMany(
+            Area::class,
+            'area_projeto',
+            'projeto_id',
+            'area_id'
+        );
     }
 
     public function acoes()

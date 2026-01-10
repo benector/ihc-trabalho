@@ -27,22 +27,39 @@
                         <tr>
                             <td>{{ $area->id }}</td>
                             <td>{{ $area->nome }}</td>
-                            <td>
-                                <a href="{{ route('admin.areas.edit', $area) }}" class="btn btn-warning btn-sm">
-                                    Editar
-                                </a>
+                       <td class="text-nowrap">
 
-                                <form action="{{ route('admin.areas.destroy', $area) }}"
-                                      method="POST"
-                                      style="display:inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Excluir esta área?')">
-                                        Excluir
-                                    </button>
-                                </form>
-                            </td>
+                            {{-- Editar --}}
+                            <a href="{{ route('admin.areas.edit', $area) }}"
+                            class="btn btn-warning btn-sm"
+                            title="Editar">
+
+                                <span class="d-none d-md-inline">Editar</span>
+                                <span class="d-inline d-md-none">
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                            </a>
+
+                            {{-- Excluir --}}
+                            <form action="{{ route('admin.areas.destroy', $area) }}"
+                                method="POST"
+                                class="d-inline">
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-danger btn-sm"
+                                        title="Excluir"
+                                        onclick="return confirm('Excluir esta área?')">
+
+                                    <span class="d-none d-md-inline">Excluir</span>
+                                    <span class="d-inline d-md-none">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </button>
+                            </form>
+
+                        </td>
+
                         </tr>
                     @endforeach
 

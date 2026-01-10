@@ -29,26 +29,51 @@
                         <tr>
                             <td>{{ $projeto->id }}</td>
                             <td>{{ $projeto->titulo }}</td>
-                            <td>{{ $projeto->area->nome ?? '-' }}</td>
+                            <td>
+                                @forelse($projeto->areas as $area)
+                                    <span class="badge bg-secondary me-1">
+                                        {{ $area->nome }}
+                                    </span>
+                                @empty
+                                    -
+                                @endforelse
+                            </td>
+
                             <td>{{ $projeto->localidade}}</td>
                             <td>{{ $projeto->coordenador }}</td>
-                            <td>
-                                <a href="{{ route('admin.projetos.edit', $projeto) }}"
-                                   class="btn btn-warning btn-sm">
-                                    Editar
-                                </a>
+                  <td class="text-nowrap">
 
-                                <form action="{{ route('admin.projetos.destroy', $projeto) }}"
-                                      method="POST"
-                                      style="display:inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Excluir este projeto?')">
-                                        Excluir
-                                    </button>
-                                </form>
-                            </td>
+                        {{-- Editar --}}
+                        <a href="{{ route('admin.projetos.edit', $projeto) }}"
+                        class="btn btn-warning btn-sm"
+                        title="Editar">
+
+                            <span class="d-none d-md-inline">Editar</span>
+                            <span class="d-inline d-md-none">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                        </a>
+
+                        {{-- Excluir --}}
+                        <form action="{{ route('admin.projetos.destroy', $projeto) }}"
+                            method="POST"
+                            class="d-inline">
+                            @csrf
+                            @method('DELETE')
+
+                            <button class="btn btn-danger btn-sm"
+                                    title="Excluir"
+                                    onclick="return confirm('Excluir este projeto?')">
+
+                                <span class="d-none d-md-inline">Excluir</span>
+                                <span class="d-inline d-md-none">
+                                    <i class="fas fa-trash"></i>
+                                </span>
+                            </button>
+                        </form>
+
+                    </td>
+
                         </tr>
                     @endforeach
 

@@ -11,8 +11,14 @@ class Area extends Model
 
     public function projetos()
     {
-        return $this->hasMany(ProjetoExtensao::class);
+        return $this->belongsToMany(
+            Projeto::class,
+            'area_projeto',
+            'area_id',
+            'projeto_id'
+        );
     }
+
 
     public function acoes()
     {

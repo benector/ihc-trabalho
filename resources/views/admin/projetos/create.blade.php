@@ -20,16 +20,41 @@
                     <label>Descrição</label>
                     <textarea name="descricao" class="form-control" rows="4" required></textarea>
                 </div>
+<div class="form-group">
+    <label class="mb-2 d-block">Áreas de Conhecimento</label>
 
-                <div class="form-group">
-                    <label>Área</label>
-                    <select name="area_id" class="form-control" required>
-                        <option value="">Selecione</option>
-                        @foreach($areas as $area)
-                            <option value="{{ $area->id }}">{{ $area->nome }}</option>
-                        @endforeach
-                    </select>
-                </div>
+    <div class="border rounded p-2"
+         style="max-height: 35vh; overflow-y: auto;">
+
+        @foreach($areas as $area)
+            <div class="form-check">
+                <input required class="form-check-input"
+                       type="checkbox"
+                       name="area_id[]"
+                       value="{{ $area->id }}"
+                       id="area_{{ $area->id }}"
+                       @checked(
+                           isset($projeto) &&
+                           $projeto->areas->pluck('id')->contains($area->id)
+                       )>
+
+                <label class="form-check-label" for="area_{{ $area->id }}">
+                    {{ $area->nome }}
+                </label>
+            </div>
+        @endforeach
+
+    </div>
+    
+
+    <small class="text-muted">
+        Selecione ao menos uma área.
+    </small>
+</div>
+
+
+
+
 
                 <div class="form-group">
                     <label>Local</label>
